@@ -17,8 +17,13 @@ RUN apk add --no-cache --update -t build-deps curl go git gcc libc-dev libgcc \
   && rm -rf /go
 
 FROM alpine:3.9
+EXPOSE 9000
 COPY --from=build /usr/local/bin/webhook /usr/local/bin/webhook
 
-EXPOSE 9000
+RUN apk --no-cache --update add bash curl git wget \
+  && addgroup -g 1000 webhook \
+  && adduser -D -u 1000 -G webhook webhook \
+  && rm -rf /var/cache/apk/*
 
+USER webhook
 CMD ["/usr/local/bin/webhook", "-verbose", "-hotreload", "-hooks", "/hooks.json"]
