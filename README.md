@@ -1,6 +1,6 @@
 # Webhook
 
-Minimal Alpine Linux Docker image with (webhook)[https://github.com/adnanh/webhook/] installed.
+Minimal Alpine Linux Docker image with [webhook](https://github.com/adnanh/webhook/) installed.
 
 ## Usage
 
