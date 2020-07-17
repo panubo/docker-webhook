@@ -1,6 +1,6 @@
-FROM golang:alpine3.9 AS build
+FROM golang:1.14-alpine3.12 AS build
 
-ENV WEBHOOK_VERSION=2.6.9 WEBHOOK_CHECKSUM=8a419a9796e0d7368dc52c53125d51aa1d28974269fe614eb7a91886fa41eb40
+ENV WEBHOOK_VERSION=2.7.0 WEBHOOK_CHECKSUM=2ae866294e9ef4a3ecbcad06355b00a8fb2bcdd674644ce69ebfbfc6c75fdbd5
 
 WORKDIR /go/src/github.com/adnanh/webhook
 
@@ -16,11 +16,11 @@ RUN apk add --no-cache --update -t build-deps curl go git gcc libc-dev libgcc \
   && rm -rf /var/cache/apk/* \
   && rm -rf /go
 
-FROM alpine:3.9
+FROM alpine:3.12
 EXPOSE 9000
 COPY --from=build /usr/local/bin/webhook /usr/local/bin/webhook
 
-RUN apk --no-cache --update add bash curl git wget \
+RUN apk --no-cache --update add bash curl git wget jq ca-certificates \
   && addgroup -g 1000 webhook \
   && adduser -D -u 1000 -G webhook webhook \
   && rm -rf /var/cache/apk/*

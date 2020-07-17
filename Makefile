@@ -20,3 +20,6 @@ push: ## Pushes the docker image to hub.docker.com
 clean: ## Remove built images
 	docker rmi $(IMAGE_NAME):latest
 	docker rmi $(IMAGE_NAME):$(TAG)
+
+bash: ## Run bash in the container
+	docker run --rm -it $(IMAGE_NAME):latest bash
